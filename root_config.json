@@ -1,5 +1,0 @@
-{
-    "name": "ai-prompt-manager",
-    "provider_region": "gcp-europe-west1",
-    "deployment_model": "LOCAL"
-}
