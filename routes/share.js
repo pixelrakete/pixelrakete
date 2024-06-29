@@ -15,7 +15,7 @@ router.post('/:id', async (req, res) => {
     prompt.shareId = shareId;
     await prompt.save();
 
-    res.json({ shareUrl: `http://localhost:3000/api/share/${shareId}` });
+    res.json({ shareUrl: `https://localhost:3000/api/share/${shareId}` });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
