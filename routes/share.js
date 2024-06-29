@@ -1,11 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const Prompt = require('../models/prompt'); // Stellen Sie sicher, dass das Modell korrekt importiert wird
+const mongoose = require('mongoose');
+const Prompt = require('../models/prompt');
 
 // Route zum Teilen eines Prompts
 router.post('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  // Überprüfen, ob die ID eine gültige ObjectId ist
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
+
   try {
-    const { id } = req.params;
     const prompt = await Prompt.findById(id);
     if (!prompt) {
       return res.status(404).json({ error: 'Prompt not found' });
@@ -15,7 +22,7 @@ router.post('/:id', async (req, res) => {
     prompt.shareId = shareId;
     await prompt.save();
 
-    res.json({ shareUrl: `https://localhost:3000/api/share/${shareId}` });
+    res.json({ shareUrl: `https://pixelrakete.onrender.com/api/share/${shareId}` });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -24,8 +31,8 @@ router.post('/:id', async (req, res) => {
 
 // Route zum Abrufen eines geteilten Prompts
 router.get('/:shareId', async (req, res) => {
+  const { shareId } = req.params;
   try {
-    const { shareId } = req.params;
     const prompt = await Prompt.findOne({ shareId });
     if (!prompt) {
       return res.status(404).json({ error: 'Shared prompt not found' });
@@ -39,4 +46,3 @@ router.get('/:shareId', async (req, res) => {
 });
 
 module.exports = router;
- 
