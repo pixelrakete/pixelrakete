@@ -1,19 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const Prompt = require('../models/prompt');
 
 // Route zum Teilen eines Prompts
 router.post('/:id', async (req, res) => {
   const { id } = req.params;
 
-  // Überprüfen, ob die ID eine gültige ObjectId ist
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: 'Invalid ID format' });
-  }
-
   try {
-    const prompt = await Prompt.findById(id);
+    // Suchen nach dem Prompt mit dem spezifischen promptId anstatt der MongoDB ObjectId
+    const prompt = await Prompt.findOne({ promptId: id });
     if (!prompt) {
       return res.status(404).json({ error: 'Prompt not found' });
     }
