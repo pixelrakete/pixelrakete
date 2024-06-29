@@ -1,5 +1,4 @@
-require('dotenv').config(); // Stellen Sie sicher, dass dies ganz oben steht
-
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -13,11 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  console.error('MONGO_URI is not defined. Please add it to your .env file.');
-  process.exit(1); // Beenden Sie die Anwendung, wenn MONGO_URI nicht definiert ist
-}
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
@@ -36,4 +30,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
- 
