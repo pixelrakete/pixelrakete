@@ -10,6 +10,10 @@ const promptSchema = new mongoose.Schema({
   version: Number,
   shareId: String,
   promptId: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model('Prompt', promptSchema);
