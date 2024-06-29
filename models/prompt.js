@@ -8,7 +8,8 @@ const promptSchema = new mongoose.Schema({
   variables: [String],
   final: Boolean,
   version: Number,
-  shareId: String
+  shareId: String,
+  promptId: String,
 });
 
 module.exports = mongoose.model('Prompt', promptSchema);
