@@ -1,4 +1,4 @@
- const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const promptSchema = new mongoose.Schema({
   name: String,
@@ -8,8 +8,11 @@ const promptSchema = new mongoose.Schema({
   variables: [String],
   final: Boolean,
   version: Number,
+  previousVersions: [{
+    text: String,
+    version: Number
+  }],
   shareId: String,
-  promptId: String,
   createdAt: {
     type: Date,
     default: Date.now
