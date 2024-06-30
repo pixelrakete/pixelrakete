@@ -4,22 +4,24 @@ const Prompt = require('../models/prompt');
 
 // Route zum Erstellen und Teilen eines neuen Prompts
 router.post('/new', async (req, res) => {
-  const {
-    name,
-    text,
-    folder,
-    color,
-    variables,
-    final,
-    version,
-    previousVersions
-  } = req.body;
-
-  if (!name || !text || !folder || !color || !variables || final === undefined || !version) {
-    return res.status(400).json({ error: 'All fields are required' });
-  }
-
   try {
+    console.log('Received data:', req.body); // Debugging: Überprüfen der empfangenen Daten
+
+    const {
+      name,
+      text,
+      folder,
+      color,
+      variables,
+      final,
+      version,
+      previousVersions
+    } = req.body;
+
+    if (!name || !text || !folder || !color || !variables || final === undefined || !version) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
     const prompt = new Prompt({
       name,
       text,
