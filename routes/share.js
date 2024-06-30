@@ -4,10 +4,28 @@ const Prompt = require('../models/prompt');
 
 // Route zum Erstellen und Teilen eines neuen Prompts
 router.post('/new', async (req, res) => {
-  const { text } = req.body;
+  const {
+    name,
+    text,
+    folder,
+    color,
+    variables,
+    final,
+    version,
+    previousVersions
+  } = req.body;
 
   try {
-    const prompt = new Prompt({ text });
+    const prompt = new Prompt({
+      name,
+      text,
+      folder,
+      color,
+      variables,
+      final,
+      version,
+      previousVersions
+    });
     await prompt.save();
 
     const shareId = Math.random().toString(36).substring(2, 15);
