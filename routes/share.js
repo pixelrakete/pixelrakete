@@ -65,17 +65,35 @@ router.post('/:id', async (req, res) => {
   }
 });
 
-// Route zum Abrufen eines geteilten Prompts
 router.get('/:shareId', async (req, res) => {
   const { shareId } = req.params;
-  console.log('Received GET request for shareId:', shareId); // Log hinzufügen
+  console.log('Received GET request for shareId:', shareId);
   try {
     const prompt = await Prompt.findOne({ shareId });
     if (!prompt) {
       return res.status(404).json({ error: 'Shared prompt not found' });
     }
 
-    res.json({ prompt });
+    // Send HTML with embedded JavaScript
+    res.send(`
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shared Prompt</title>
+      </head>
+      <body>
+        <h1>Shared Prompt</h1>
+        <p>Adding shared prompt to your collection...</p>
+        <script>
+          const sharedPrompt = ${JSON.stringify(prompt)};
+          window.opener.postMessage({ type: 'SHARED_PROMPT', prompt: sharedPrompt }, '*');
+          window.close();
+        </script>
+      </body>
+      </html>
+    `);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
