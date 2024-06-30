@@ -39,6 +39,7 @@ router.post('/new', async (req, res) => {
   }
 });
 
+
 // Route zum Teilen eines bestehenden Prompts
 router.post('/:id', async (req, res) => {
   const { id } = req.params;
