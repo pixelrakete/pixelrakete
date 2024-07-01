@@ -88,15 +88,9 @@ router.get('/:shareId', async (req, res) => {
         <p>Adding shared prompt to your collection...</p>
         <script>
           const sharedPrompt = ${JSON.stringify(prompt)};
-          if (window.opener) {
-              window.opener.postMessage({
-                  type: 'SHARED_PROMPT',
-                  prompt: sharedPrompt
-              }, '*');
-              window.close();
-          } else {
-              localStorage.setItem('sharedPrompt', JSON.stringify(sharedPrompt));
-              document.body.innerHTML = '<h1>Shared Prompt</h1><p>Please open the app to import the shared prompt.</p>';
+          console.log(sharedPrompt);
+          localStorage.setItem('sharedPrompt', JSON.stringify(sharedPrompt));
+          document.body.innerHTML = '<h1>Shared Prompt</h1><p>Please open the app to import the shared prompt.</p>';
           }
         </script>
       </body>
