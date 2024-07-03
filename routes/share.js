@@ -74,7 +74,6 @@ router.get('/:shareId', async (req, res) => {
       return res.status(404).json({ error: 'Shared prompt not found' });
     }
 
-    // Send HTML with embedded JavaScript
     res.send(`
       <!DOCTYPE html>
       <html lang="en">
@@ -89,8 +88,13 @@ router.get('/:shareId', async (req, res) => {
         <script>
           const sharedPrompt = ${JSON.stringify(prompt)};
           console.log(sharedPrompt);
-          localStorage.setItem('sharedPrompt', JSON.stringify(sharedPrompt));
-          document.body.innerHTML = '<h1>Shared Prompt</h1><p>Please open the app to import the shared prompt.</p>';
+          chrome.runtime.sendMessage({
+            action: "importSharedPrompt",
+            prompt: sharedPrompt
+          }, function(response) {
+            console.log(response.status);
+            document.body.innerHTML = '<h1>Shared Prompt</h1><p>' + response.status + '</p>';
+          });
         </script>
       </body>
       </html>
