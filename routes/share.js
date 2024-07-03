@@ -86,15 +86,9 @@ router.get('/:shareId', async (req, res) => {
         <h1>Shared Prompt</h1>
         <p>Adding shared prompt to your collection...</p>
         <script>
-          const sharedPrompt = ${JSON.stringify(prompt)};
-          console.log(sharedPrompt);
-          chrome.runtime.sendMessage({
-            action: "importSharedPrompt",
-            prompt: sharedPrompt
-          }, function(response) {
-            console.log(response.status);
-            document.body.innerHTML = '<h1>Shared Prompt</h1><p>' + response.status + '</p>';
-          });
+          window.sharedPrompt = ${JSON.stringify(prompt)};
+          console.log("Shared prompt data:", window.sharedPrompt);
+          document.body.innerHTML += '<p>Please open the extension to import the shared prompt.</p>';
         </script>
       </body>
       </html>
